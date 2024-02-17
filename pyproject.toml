@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yolov7"
+authors = [
+    {name = "Flowstate", email = "dev@flowstate.zone"},
+]
+description = "A port and simplification of YOLOv7 model by Kin-Yiu, Wong"
+readme = "README.rst"
+requires-python = ">=3.11"
+keywords = ["one", "two"]
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "torch",
+    "torchvision",
+    "matplotlib",
+    "numpy",
+    "opencv-python",
+    "Pillow",
+    "PyYAML",
+    "requests",
+    "scipy",
+    "tqdm",
+    "protobuf",
+    "tensorboard",
+    "pandas",
+    "seaborn",
+    "wandb",
+]
+
+dynamic = ["version"]
