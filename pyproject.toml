@@ -9,7 +9,7 @@ authors = [
 ]
 description = "A port and simplification of YOLOv7 model by Kin-Yiu, Wong"
 readme = "README.rst"
-requires-python = ">=3.11"
+requires-python = ">=3.10.8"
 keywords = ["one", "two"]
 license = {text = "BSD-3-Clause"}
 classifiers = [
