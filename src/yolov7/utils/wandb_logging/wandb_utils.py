@@ -10,7 +10,6 @@ sys.path.append(str(Path(__file__).parent.parent.parent))  # add utils/ to path
 from utils.datasets import LoadImagesAndLabels
 from utils.datasets import img2label_paths
 from utils.general import colorstr, xywh2xyxy, check_dataset
-from datetime import datetime
 
 try:
     import wandb
@@ -93,8 +92,6 @@ class WandbLogger():
                 self.wandb_run = wandb.init(id=run_id, project=project, resume='allow')
                 opt.resume = model_artifact_name
         elif self.wandb:
-            if run_id is None:
-                run_id = datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S')
             self.wandb_run = wandb.init(config=opt,
                                         resume="allow",
                                         project='YOLOR' if opt.project == 'runs/train' else Path(opt.project).stem,
