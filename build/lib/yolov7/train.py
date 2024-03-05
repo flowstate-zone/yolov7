@@ -85,6 +85,12 @@ def train(hyp, opt, device, tb_writer=None):
         with torch_distributed_zero_first(rank):
             attempt_download(weights)  # download if not found locally
         ckpt = torch.load(weights, map_location=device)  # load checkpoint
+
+        logger.info(f'Resuming training from {weights}...')
+        logger.info(f'Resuming training from epoch {ckpt["epoch"]}')
+        logger.info(f'Resuming training from best fitness {ckpt["best_fitness"]}')
+        logger.info(f'wandb_id: {ckpt["wandb_id"]}')
+
         model = Model(opt.cfg or ckpt['model'].yaml, ch=3, nc=nc, anchors=hyp.get('anchors')).to(device)  # create
         exclude = ['anchor'] if (opt.cfg or hyp.get('anchors')) and not opt.resume else []  # exclude keys
         state_dict = ckpt['model'].float().state_dict()  # to FP32
@@ -216,6 +222,11 @@ def train(hyp, opt, device, tb_writer=None):
         if ckpt.get('training_results') is not None:
             results_file.write_text(ckpt['training_results'])  # write results.txt
 
+
+        logger.info(f'Resuming training from {weights}...')
+        logger.info(f'Resuming training from epoch {ckpt["epoch"]}')
+        logger.info(f'Resuming training from best fitness {ckpt["best_fitness"]}')
+        logger.info(f'wandb_id: {ckpt["wandb_id"]}')
         # Epochs
         start_epoch = ckpt['epoch'] + 1
         if opt.resume:
