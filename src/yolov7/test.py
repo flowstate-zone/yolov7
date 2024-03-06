@@ -18,6 +18,9 @@ from .utils.plots import plot_images, output_to_target, plot_study_txt
 from .utils.torch_utils import select_device, time_synchronized, TracedModel
 
 
+class optclass(object):
+    single_cls = False
+
 def test(data,
          weights=None,
          batch_size=32,
@@ -60,6 +63,7 @@ def test(data,
         (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
         # Load model
+        print(device)
         model = attempt_load(weights, map_location=device)  # load FP32 model
         gs = max(int(model.stride.max()), 32)  # grid size (max stride)
         imgsz = check_img_size(imgsz, s=gs)  # check img_size
@@ -92,6 +96,7 @@ def test(data,
         if device.type != 'cpu':
             model(torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters())))  # run once
         task = task if task in ('train', 'val', 'test') else 'val'  # path to train/val/test images
+        opt = optclass()
         dataloader = create_dataloader(data[task], imgsz, batch_size, gs, opt, pad=0.5, rect=True,
                                        prefix=colorstr(f'{task}: '))[0]
 
